@@ -1,8 +1,0 @@
-{
-  "Selenium_Grid_Hub": "http://192.168.0.229:4444/wd/hub",
-  "Platform": "WINDOWS",
-  "Browser": "CHROME",
-  "Page_Load_Seconds": 10,
-  "Element_Load_Seconds": 10,
-  "Base_Url": "http://www.google.com"
-}
