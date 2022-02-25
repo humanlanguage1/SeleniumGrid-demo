@@ -1,11 +1,20 @@
+import os
 import allure
 import pytest
 from allure_commons.types import AttachmentType
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-
-
+# Set this value in your capabilities
+desired_cap = {
+ "browserstack.local" : "true"
+}
+username = os.environ['BROWSERSTACK_USERNAME'];
+accessKey = os.environ['BROWSERSTACK_ACCESS_KEY'];
+driver = webdriver.Remote(
+    command_executor='https://'+username+':'+accessKey+'@hub-cloud.browserstack.com/wd/hub',
+    desired_capabilities=desired_cap
+    )
 def get_data():
     return [
         ("trainer@way2automation.com", "dfdsfjdsf"),
