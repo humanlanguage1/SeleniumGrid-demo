@@ -11,8 +11,21 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+username = os.getenv("BROWSERSTACK_USERNAME")
+access_key = os.getenv("BROWSERSTACK_ACCESS_KEY")
+build_name = os.getenv("BROWSERSTACK_BUILD_NAME")
+browserstack_local = os.getenv("BROWSERSTACK_LOCAL")
+browserstack_local_identifier = os.getenv("BROWSERSTACK_LOCAL_IDENTIFIER")
 
-
+caps = {
+ 'os': 'Windows',
+ 'browser': 'chrome',
+ 'build': build_name, # CI/CD job name using BROWSERSTACK_BUILD_NAME env variable
+ 'browserstack.local': browserstack_local,
+ 'browserstack.localIdentifier': browserstack_local_identifier,
+ 'browserstack.user': username,
+ 'browserstack.key': access_key
+}
 @pytest.fixture()
 def log_on_failure(request, chrome_browser):
     yield
@@ -53,7 +66,10 @@ def chrome_browser():
         # subprocess.call(["sh", script_ini_l], shell=True)
     #sleep(20)
   #  driver = webdriver.Chrome(executable_path=ChromeDriverManager().install())
-    driver = webdriver.Remote(command_executor=remote_url, options=webdriver.ChromeOptions())
+    driver = webdriver.Remote(
+    command_executor='https://hub-cloud.browserstack.com/wd/hub',
+    desired_capabilities=caps)
+    #driver = webdriver.Remote(command_executor=remote_url, options=webdriver.ChromeOptions())
     driver.get("https://facebook.com/")
     driver.maximize_window()
     yield driver
