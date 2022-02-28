@@ -35,7 +35,3 @@ steps:
     pytest --alluredir=./Reports Testcases/test_webdriver_integration.py
   displayName: 'pytest'
   
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
